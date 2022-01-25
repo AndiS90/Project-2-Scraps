@@ -1,0 +1,116 @@
+/* CSS FOR HEADER */
+
+@font-face {
+    font-family: FinkHeavy;
+    src: url(./font/FinkHeavy.ttf);
+ }
+
+body {
+  background-image: url("../images/image-1.jpeg");
+}
+
+/* CSS FOR HEADER (LOGGED IN)*/
+.header-container {
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
+
+/* CSS FOR HEADER (LOGGED OUT )*/
+.header-container-two {
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
+
+
+.header-2{
+  padding-top: 20rem;
+  padding-left: 43rem;
+}
+
+.sub-2 {
+  padding-left: 43rem;
+}
+
+
+
+/* GENERAL CSS */
+h1 {
+    font-family: FinkHeavy;
+}
+
+h2 {
+    font-family: FinkHeavy;
+}
+
+h4 {
+    font-family: FinkHeavy;
+}
+
+p {
+    font-family: FinkHeavy;
+}
+
+/* STYLING FOR NAVBAR - LOCATED IN HEADER */
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-right: 30rem;
+    padding-left: 29.2rem;
+    overflow: hidden;
+    background-color: #54ac8c;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover:not(.active) {
+    background-color: #88dfbf;;
+  }
+  
+  .active {
+    background-color: #88dfbf;
+  }
+  
+  a {
+      font-family: FinkHeavy;
+  }
+
+/* LOGO CSS*/
+.logo-div {
+  padding-top: 1rem;
+}
+
+
+.icon {
+  height: 200px;
+  width: 250px;
+
+}
+
+/* CARD CSS */
+.card-div {
+  float: left;
+}
+
+/* LOGO BEFORE LOGIN*/
+.logo-div-two {
+  padding-top: 7rem;
+}
+
+
+.icon-two {
+  height: 600px;
+  width: 710px;
+
+}
