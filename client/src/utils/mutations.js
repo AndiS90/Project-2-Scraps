@@ -1,23 +1,34 @@
 import { gql } from '@apollo/client';
 
 export const ADD_PROFILE = gql`
-  mutation addProfile($name: String!, $email: String!, $password: String!) {
-    addProfile(name: $name, email: $email, password: $password) {
+  mutation addProfile($username: String!, $email: String!, $password: String!) {
+    addProfile(username: $username, email: $email, password: $password) {
       token
       profile {
         _id
-        name
+        username
       }
     }
   }
 `;
 
-export const ADD_SKILL = gql`
-  mutation addSkill($profileId: ID!, $skill: String!) {
-    addSkill(profileId: $profileId, skill: $skill) {
+export const ADD_VILLAGER = gql`
+  mutation addVillager(villagerUser: String, villagerInput: VillagerInput!) {
+    addVillager(villagerUser: $villagerUser, villagerInput: $villagerInput) {
       _id
-      name
-      skills
+      username
+      email
+      bookCount
+      savedVillagers {
+          villagerUser
+          name
+          apiId
+          birthdayStr
+          species
+          icon
+          image 
+          saying
+          personality
     }
   }
 `;
@@ -28,18 +39,73 @@ export const LOGIN_USER = gql`
       token
       profile {
         _id
-        name
+        username
       }
     }
   }
 `;
 
-export const REMOVE_SKILL = gql`
-  mutation removeSkill($skill: String!) {
-    removeSkill(skill: $skill) {
+export const REMOVE_VILLAGER = gql`
+  mutation removeVillager($villagerId: ID!) {
+    removeVillager(villagerId: $villagerId) {
       _id
-      name
-      skills
+      username
+      email
+      savedVillagers{
+          villagerUser
+          name
+          apiId
+          birthdayStr
+          species
+          icon
+          image
+          saying
+          personality
+      }
     }
   }
+`;
+
+export const ADD_MOVINGVIL = gql`
+  mutation addMovingVil(villagerUser: String, movingVilInput: MovingVilInput!) {
+    addMovingVil(villagerUser: $villagerUser, movingVilInput: $movingVilInput) {
+      _id
+      villagerUser
+      name
+      apiId
+      birthdayStr
+      species
+      icon
+      image
+      saying
+      personality
+      comments: {
+        _id
+        commentText
+        createdAt
+      }
+  }
+}
+`;
+
+export const REMOVE_MOVINGVIL = gql`
+  mutation removeMovingVil($villagerId: ID!) {
+    removeMovingVil(villagerId: $villagerId) {
+      _id
+      villagerUser
+      name
+      apiId
+      birthdayStr
+      species
+      icon
+      image
+      saying
+      personality
+      comments: {
+        _id
+        commentText
+        createdAt
+      }
+  }
+}
 `;

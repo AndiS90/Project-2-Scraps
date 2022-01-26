@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { villagersToMoveOut } from '../VillagerList';
 
-const ProfileList = ({ profiles, title }) => {
+//work in progress
+
+const MovingOutList = ({ profiles, VillagersToMoveOut }) => {
   if (!profiles.length) {
     return <h3>No Profiles Yet</h3>;
   }
@@ -15,11 +18,11 @@ const ProfileList = ({ profiles, title }) => {
             <div key={profile._id} className="col-12 col-xl-6">
               <div className="card mb-3">
                 <h4 className="card-header bg-dark text-light p-2 m-0">
-                  {profile.name} <br />
+                  {profile.username} <br />
                   <span className="text-white" style={{ fontSize: '1rem' }}>
-                    currently has {profile.skills ? profile.skills.length : 0}{' '}
-                    endorsed skill
-                    {profile.skills && profile.skills.length === 1 ? '' : 's'}
+                    currently has {profile.villagers ? profile.villagers.length : 0}{' '}
+                    villagers
+                    {profile.villagers && profile.villagers.length === 1 ? '' : 's'}
                   </span>
                 </h4>
 
@@ -27,7 +30,10 @@ const ProfileList = ({ profiles, title }) => {
                   className="btn btn-block btn-squared btn-light text-dark"
                   to={`/profiles/${profile._id}`}
                 >
-                  View and endorse their skills.
+                  View their villagers and make comments.
+
+                  {VillagersToMoveOut}
+
                 </Link>
               </div>
             </div>
@@ -37,4 +43,4 @@ const ProfileList = ({ profiles, title }) => {
   );
 };
 
-export default ProfileList;
+export default MovingOutList;

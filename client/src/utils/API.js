@@ -1,4 +1,4 @@
-async function searchAllVillagers() {
+export async function searchAllVillagers() {
 
     const villagersArray = [];
 
@@ -26,7 +26,7 @@ async function searchAllVillagers() {
 };
 
 
-async function getIdByName(nameStr) {
+export async function getIdByName(nameStr) {
 
     const namesArr = await searchAllVillagers();
 
@@ -78,3 +78,9 @@ const resp = await  fetch(`http://acnhapi.com/v1a/villagers/`)
 return resp;
 
 };
+
+
+export async function getVillagerbyId(apiId){
+
+    const resp = await  fetch(`http://acnhapi.com/v1a/villagers/${apiID}`)
+.then((response) => response.json()).then((data) => {

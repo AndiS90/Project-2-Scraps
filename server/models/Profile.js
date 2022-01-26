@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const profileSchema = new Schema({
-  name: {
+  username: {
     type: String,
     required: true,
     unique: true,
@@ -19,12 +19,10 @@ const profileSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  skills: [
-    {
-      type: String,
-      trim: true,
-    },
-  ],
+  villagers: [ {
+    type: Schema.Types.ObjectId,
+    ref: 'Villager',
+  },],
 });
 
 // set up pre-save middleware to create password
@@ -45,3 +43,13 @@ profileSchema.methods.isCorrectPassword = async function (password) {
 const Profile = model('Profile', profileSchema);
 
 module.exports = Profile;
+
+
+// when we query a user, we'll also get another field called `villagerCount` with the number of saved villagers we have
+userSchema.virtual('villagerCount').get(function () {
+  return this.villagers.length;
+});
+
+const User = model('User', userSchema);
+
+module.exports = User;

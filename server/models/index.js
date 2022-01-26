@@ -1,3 +1,4 @@
 const Profile = require('./Profile');
-
-module.exports = { Profile };
+const Villager = require('./Villager');
+const MovingVil = require('./MovingVil');
+module.exports = { Profile, Villager, MovingVil };

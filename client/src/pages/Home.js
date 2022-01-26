@@ -1,12 +1,12 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 
-import ProfileList from '../components/ProfileList';
+import MovingOutList from '../components/MovingOutList';
 
-import { QUERY_PROFILES } from '../utils/queries';
+import { QUERY_MOVINGVILLAGERS } from '../utils/queries';
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_PROFILES);
+  const { loading, data } = useQuery(QUERY_MOVINGVILLAGERS);
   const profiles = data?.profiles || [];
 
   return (
