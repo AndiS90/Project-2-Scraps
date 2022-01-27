@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
+import { REMOVE_VILLAGER, ADD_MOVINGVIL } from '../utils/mutations';
+import { QUERY_ME } from '../utils/queries';
+import { getVillagerbyId } from '../utils/API';
+import Auth from '../utils/auth'; 
+
 
 import 'materialize-css';
-import {  Button, Card } from 'materialize-css';
+import {  Button, Card, CardTitle, Icon, Select } from 'materialize-css';
 
-import{ CommentForm } from './CommentForm';
-import{ CommentList } from './CommentList';
+import { removeVillagerId } from '../utils/localStorage';
+
+import CommentForm  from './CommentForm';
+import CommentList  from './CommentList';
 
 const VillagerList = () => {
 
@@ -24,12 +31,11 @@ const [villagersToMoveOut, setVillagersToMoveOut] = useState('');
 
 const { loading, data } = useQuery(QUERY_ME);
 
-const [deleteVillager, { error }] = useMutation(DELETE_VILLAGER;
+const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
 
+    const [addMovingVil, { err }] = useMutation(ADD_MOVINGVIL);
 
 const  userData = data?.me || {};
-
-
 
 if (!userData?.username) {
   return (
@@ -51,7 +57,7 @@ if (!userData?.username) {
     }
 
     try {
-      const { data }= await deleteVillager({
+      const { data }= await removeVillager({
         variables: { villagerId }
       });
 
@@ -66,15 +72,28 @@ if (!userData?.username) {
     }
   }
 
-  
+ 
 
-    const handleMovingVillager = (villagerId) => {
+    const handleMovingVillager = async (villagerId) => {
+
+   
       
       try {
+        const vilObj = await getVillagerbyId(villagerId);
 
+        const villagerInput = {
+          name: vilObj.name['name-USen'],
+          apiId: vilObj.id,
+          birthdayStr: vilObj.birthdayStr,
+          species: vilObj.species,
+          icon: vilObj.icon,
+          image: vilObj.image,
+          saying: vilObj.saying,
+          personality: vilObj.personality
+        }
 
         const data = await addMovingVil({
-           variables: { villagerUser, villagerInput },
+           variables: { ...villagerInput },
         });
   
 
@@ -84,8 +103,10 @@ if (!userData?.username) {
       const movingOutArrayofIds = movingVillagersArray.push( villagerId )
     
       setVillagersToMoveOut(movingOutArrayofIds);
-    };
-
+    } catch (err) {
+      console.error(err);
+    }
+  } 
 
 
   return (

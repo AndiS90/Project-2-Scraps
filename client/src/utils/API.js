@@ -82,5 +82,8 @@ return resp;
 
 export async function getVillagerbyId(apiId){
 
-    const resp = await  fetch(`http://acnhapi.com/v1a/villagers/${apiID}`)
-.then((response) => response.json()).then((data) => {
+    const resp = await  fetch(`http://acnhapi.com/v1a/villagers/${apiId}`)
+.then((response) => response.json())
+
+    return resp;
+}

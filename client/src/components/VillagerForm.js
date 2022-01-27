@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import { getVillagerbyId } from '../utils/API';
 
-import { saveVillagerIds, getSavedVillagerIds } from '../utils/';
+import { saveVillagerIds, getSavedVillagerIds } from '../utils/localStorage';
 
 import { ADD_VILLAGER } from '../utils/mutations';
 
@@ -81,18 +82,30 @@ console.log({ ...optionsObj } );
       }
   };
 
+  const apiId = getIdByName(value);
 
 
 
-    try {
+    try { 
+      const vilObj = await getVillagerbyId(apiId);
 
+      const villagerInput = {
+        name: vilObj.name['name-USen'],
+        apiId: vilObj.id,
+        birthdayStr: vilObj.birthdayStr,
+        species: vilObj.species,
+        icon: vilObj.icon,
+        image: vilObj.image,
+        saying: vilObj.saying,
+        personality: vilObj.personality
+      }
 
       const data = await addVillager({
-         variables: { villagerUser, villagerInput },
+         variables: { ...villagerInput },
       });
 
 
-      setSavedVillagerIds([...savedVillagerIds, villagerToSave.apiId]);
+      setSavedVillagerIds([...savedVillagerIds, vilObj.apiId]);
       setVillager('');
     } catch (err) {
       console.error(err);
@@ -117,7 +130,7 @@ console.log({ ...optionsObj } );
           <div className="col-12 col-lg-9">
             <input
               placeholder="Search Villagers..."
-              value={villagerName}
+              value="Villager Name"
               className="form-input w-100"
               onChange={(event) => setVillager(event.target.value)} />
 
@@ -158,4 +171,4 @@ console.log({ ...optionsObj } );
   );
 };
 
-export default SkillForm;
+export default VillagerForm;

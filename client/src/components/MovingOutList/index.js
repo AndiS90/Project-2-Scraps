@@ -11,7 +11,7 @@ const MovingOutList = ({ profiles, VillagersToMoveOut }) => {
 
   return (
     <div>
-      <h3 className="text-primary">{title}</h3>
+      <h3 className="text-primary">{}</h3>
       <div className="flex-row justify-space-between my-4">
         {profiles &&
           profiles.map((profile) => (

@@ -18,7 +18,7 @@ export const ADD_VILLAGER = gql`
       _id
       username
       email
-      bookCount
+      villagerCount
       savedVillagers {
           villagerUser
           name
@@ -108,4 +108,26 @@ export const REMOVE_MOVINGVIL = gql`
       }
   }
 }
+`;
+
+
+export const ADD_COMMENT = gql`
+  mutation addComment($villagerId: ID!, $commentText: String!) {
+    addComment(villagerId: $thoughtId, commentText: $commentText) {
+      _id
+      username
+      email
+      villagerCount
+      savedVillagers {
+          villagerUser
+          name
+          apiId
+          birthdayStr
+          species
+          icon
+          image 
+          saying
+          personality
+    }
+  }
 `;
