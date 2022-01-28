@@ -30,6 +30,7 @@ export const QUERY_SINGLE_PROFILE = gql`
       _id
       username
       villagers{
+        _id
         name
         villagerId
         birthdayStr
@@ -75,3 +76,26 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+
+export const QUERY_VILLAGERS = gql`
+query villagers($profileId: ID!){
+    villagers(profileId: $profileId){
+      name
+      villagerId
+      birthdayStr
+      species
+      icon
+      image
+      saying
+      personality
+      comments{
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }     
+    }
+}
+
+`

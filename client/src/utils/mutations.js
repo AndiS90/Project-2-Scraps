@@ -13,13 +13,9 @@ export const ADD_PROFILE = gql`
 `;
 
 export const ADD_VILLAGER = gql`
-  mutation addVillager(villagerUser: String, villagerInput: VillagerInput!) {
-    addVillager(villagerUser: $villagerUser, villagerInput: $villagerInput) {
-      _id
-      username
-      email
-      villagerCount
-      savedVillagers {
+  mutation addVillager($villagerInput: VillagerInput!) {
+    addVillager(villagerInput: $villagerInput) {
+           _id
           villagerUser
           name
           apiId
@@ -29,6 +25,10 @@ export const ADD_VILLAGER = gql`
           image 
           saying
           personality
+          comments {
+            _id
+            commentText
+          }
     }
   }
 `;
@@ -48,10 +48,7 @@ export const LOGIN_USER = gql`
 export const REMOVE_VILLAGER = gql`
   mutation removeVillager($villagerId: ID!) {
     removeVillager(villagerId: $villagerId) {
-      _id
-      username
-      email
-      savedVillagers{
+           _id
           villagerUser
           name
           apiId
@@ -61,14 +58,17 @@ export const REMOVE_VILLAGER = gql`
           image
           saying
           personality
-      }
+          comments {
+            _id
+            commentText
+          }
     }
   }
 `;
 
 export const ADD_MOVINGVIL = gql`
-  mutation addMovingVil(villagerUser: String, movingVilInput: MovingVilInput!) {
-    addMovingVil(villagerUser: $villagerUser, movingVilInput: $movingVilInput) {
+  mutation addMovingVil(movingVilInput: MovingVilInput!) {
+    addMovingVil(movingVilInput: $movingVilInput) {
       _id
       villagerUser
       name
@@ -113,21 +113,21 @@ export const REMOVE_MOVINGVIL = gql`
 
 export const ADD_COMMENT = gql`
   mutation addComment($villagerId: ID!, $commentText: String!) {
-    addComment(villagerId: $thoughtId, commentText: $commentText) {
+    addComment(villagerId: $villagerId, commentText: $commentText) {
       _id
-      username
-      email
-      villagerCount
-      savedVillagers {
-          villagerUser
-          name
-          apiId
-          birthdayStr
-          species
-          icon
-          image 
-          saying
-          personality
+      villagerUser
+      name
+      apiId
+      birthdayStr
+      species
+      icon
+      image 
+      saying
+      personality
+      comments {
+        _id
+        commentText
+      }
     }
-  }
+}
 `;

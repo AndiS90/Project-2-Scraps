@@ -1,6 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { Profile, Villager, MovingVil } = require('../models');
-const MovingVil = require('../models/MovingVil');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -10,7 +9,7 @@ const resolvers = {
     // },
 
     profile: async (parent, { profileId }) => {
-      return Profile.findOne({ _id: profileId });
+      return Profile.findOne({ _id: profileId }).populate('villagers');
     },
 
     villagers: async (parent, { username }) => {
@@ -29,12 +28,10 @@ const resolvers = {
       return MovingVil.findOne({ _id: villagerId });
     },
 
-
-
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
     me: async (parent, args, context) => {
       if (context.user) {
-        return Profile.findOne({ _id: context.user._id });
+        return Profile.findOne({ _id: context.user._id }).populate('villagers');
       }
       throw new AuthenticationError('You need to be logged in!');
     },
@@ -67,12 +64,12 @@ const resolvers = {
 
     
     // Set up mutation so a logged in user can only remove their profile and no one else's
-    removeProfile: async (parent, args, context) => {
-      if (context.user) {
-        return Profile.findOneAndDelete({ _id: context.user._id });
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
+    // removeProfile: async (parent, args, context) => {
+    //   if (context.user) {
+    //     return Profile.findOneAndDelete({ _id: context.user._id });
+    //   }
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
 
     
     // Add a third argument to the resolver to access data in our `context`
@@ -85,10 +82,10 @@ const resolvers = {
 
         await Profile.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { villagers: villager } }
+          { $addToSet: { villagers: villager._id } }
         );
 
-        return Villager;
+        return villager;
       }
 
       // If user attempts to execute this mutation and isn't logged in, throw an error
@@ -103,11 +100,13 @@ const resolvers = {
           villagerUser: context.profile.username,
         });
 
-        return Profile.findOneAndUpdate(
+        await Profile.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { villagers: villager._id } },
           { new: true }
         );
+
+        return villager;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
@@ -155,7 +154,7 @@ addMovingVil: async (parent, { movingVilInput }, context) => {
   if (context.user) {
     const movingVil = await MovingVil.create({
         villagerUser: context.user.username,
-        movingVilInput: villagerInput
+        movingVilInput: movingVilInput
     });
 
     // await Profile.findOneAndUpdate(
@@ -173,11 +172,13 @@ addMovingVil: async (parent, { movingVilInput }, context) => {
         villagerUser: context.profile.username,
       });
 
-      return Profile.findOneAndUpdate(
-        { _id: context.user._id },
-        { $pull: { villagers: villager._id } },
-        { new: true }
-      );
+      // return Profile.findOneAndUpdate(
+      //   { _id: context.user._id },
+      //   { $pull: { villagers: villager._id } },
+      //   { new: true }
+      // );
+
+      return movingVil;
     }
     throw new AuthenticationError('You need to be logged in!');
   },

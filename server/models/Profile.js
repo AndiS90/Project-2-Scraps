@@ -40,16 +40,14 @@ profileSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
+// when we query a user, we'll also get another field called `villagerCount` with the number of saved villagers we have
+profileSchema.virtual('villagerCount').get(function () {
+  return this.villagers.length;
+});
 const Profile = model('Profile', profileSchema);
 
 module.exports = Profile;
 
 
-// when we query a user, we'll also get another field called `villagerCount` with the number of saved villagers we have
-userSchema.virtual('villagerCount').get(function () {
-  return this.villagers.length;
-});
 
-const User = model('User', userSchema);
 
-module.exports = User;

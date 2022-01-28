@@ -3,7 +3,6 @@ const dateFormat = require('../utils/dateFormat');
 
 
 const villagerSchema = new Schema({
-
     villagerUser: {
         type: String,
         required: true,

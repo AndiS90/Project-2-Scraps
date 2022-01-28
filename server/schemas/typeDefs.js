@@ -7,6 +7,7 @@ const typeDefs = gql`
     email: String
     password: String
     villagers: [Villager]
+    villagerCount: Int
   }
 
   type Auth {
@@ -28,9 +29,9 @@ const typeDefs = gql`
     comments: [Comment]
   }
 
-  type VillagerInput {
+  input VillagerInput {
     name: String
-    apiId; Int
+    apiId: Int
     birthdayStr: String
     species: String!
     icon: String
@@ -54,9 +55,9 @@ const typeDefs = gql`
     comments: [Comment]
   }
 
-  type MovingVilInput {
+  input MovingVilInput {
     name: String
-    apiId; Int
+    apiId: Int
     birthdayStr: String
     species: String!
     icon: String
@@ -76,6 +77,7 @@ const typeDefs = gql`
    # profiles: [Profile]!
     profile(profileId: ID!): Profile
     villagers(profileId: ID!): [Villager]
+    villager(villagerID: ID!): Villager
     movingVils:[MovingVil]
     movingVil(villagerId: ID!): MovingVil
 
@@ -88,11 +90,11 @@ const typeDefs = gql`
     addProfile(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     removeProfile: Profile
-    addVillager(villagerUser: String, villagerInput: VillagerInput!): Villager
+    addVillager(villagerInput: VillagerInput!): Villager
     addComment(villagerId: ID!, commentText: String!): Villager
-    removeVillager(villagerId: ID!): Profile
+    removeVillager(villagerId: ID!): Villager
     removeComment(villagerId: ID!, commentId: ID!): Villager
-    addMovingVil(villagerUser: String, movingVilInput: MovingVilInput!):MovingVil
+    addMovingVil(movingVilInput: MovingVilInput!):MovingVil
     removeMovingVil(villagerId: ID! ): MovingVil
 
   }
