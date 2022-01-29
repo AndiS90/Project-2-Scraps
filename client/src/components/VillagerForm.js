@@ -26,7 +26,7 @@ const VillagerForm = () => {
       setNamesAndApiIdsArr(namesandApiIds);
     }
     getNamesandApiIds();
-  });
+  }, []);
 
 
 //optionsObj contains necessary formatting for autofill feature not currently working

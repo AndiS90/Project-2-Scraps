@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import  VillagerList  from '../components/VillagerList';
-import   VillagerForm  from '../components/VillagerForm'
+import   VillagerForm  from '../components/VillagerForm';
 
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
