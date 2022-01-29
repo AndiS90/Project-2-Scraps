@@ -82,9 +82,9 @@ const resolvers = {
         console.log(context.user);
 
         const villager = await Villager.create({
-            villagerUser: context.user.username,
-            villagerInput: { ...villagerInput  }
-        });
+          villagerUser: context.user.username,
+            ...villagerInput 
+      });
   console.log(villager);
         await Profile.findOneAndUpdate(
           { _id: context.user._id },

@@ -126,7 +126,7 @@ const VillagerForm = () => {
       console.log(villagerInput);
 
       const { data } = await addVillager({
-         variables: {villagerInput,
+         variables: {villagerInput: { ...villagerInput},
                       // villagerUser: Auth.getProfile().data.username,
         },
       });
