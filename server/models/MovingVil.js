@@ -13,7 +13,7 @@ const movingVilSchema = new Schema({
         required: true,
       },
     apiId: {
-        type: Int,
+        type: Number,
         required: true,
     },
     birthdayStr: {

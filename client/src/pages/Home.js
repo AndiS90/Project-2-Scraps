@@ -6,8 +6,7 @@ import MovingOutList from '../components/MovingOutList';
 import { QUERY_MOVINGVILLAGERS } from '../utils/queries';
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_MOVINGVILLAGERS);
-  const profiles = data?.profiles || [];
+
 
   return (
 
@@ -15,6 +14,8 @@ const Home = () => {
     <main>
       <div className="flex-row justify-center">
         <div className="col-12 col-md-10 my-3">
+
+          <MovingOutList></MovingOutList>
           {/* {loading ? (
             <div>Loading...</div>
           ) : (

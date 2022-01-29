@@ -2,44 +2,53 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { villagersToMoveOut } from '../VillagerList';
 
+import 'materialize-css';
+import {  Button, Card, CardTitle, Icon, Select } from 'materialize-css';
+import CommentForm from '../CommentForm';
+import CommentList from '../CommentList';
+
+import { useQuery } from '@apollo/client';
+
+import { QUERY_MOVINGVILLAGERS } from '../../utils/queries';
+
 //work in progress
 
-const MovingOutList = ({ profiles, VillagersToMoveOut }) => {
-  if (!profiles.length) {
-    return <h3>No Profiles Yet</h3>;
+const MovingOutList = () => {
+
+  const { loading, data } = useQuery(QUERY_MOVINGVILLAGERS);
+
+  const movingVils = data?.movingVils || [];
+
+  if (!movingVils.length) {
+    return <h3>No Moving Villagers Yet</h3>;
   }
 
   return (
     <div>
-      <h3 className="text-primary">{}</h3>
-      <div className="flex-row justify-space-between my-4">
-        {profiles &&
-          profiles.map((profile) => (
-            <div key={profile._id} className="col-12 col-xl-6">
-              <div className="card mb-3">
-                <h4 className="card-header bg-dark text-light p-2 m-0">
-                  {profile.username} <br />
-                  <span className="text-white" style={{ fontSize: '1rem' }}>
-                    currently has {profile.villagers ? profile.villagers.length : 0}{' '}
-                    villagers
-                    {profile.villagers && profile.villagers.length === 1 ? '' : 's'}
-                  </span>
-                </h4>
+     {movingVils &&
+          movingVils.map((villager) => (
+          <Card className='card-div'
+          closeIcon={<Icon>close</Icon>}
+          header={<CardTitle image={ villager.icon} reveal waves="light"/>}
+          reveal={ <div> <CommentList> </CommentList>
+           <CommentForm> </CommentForm> </div>}
+          revealIcon={<Icon>more_vert</Icon>}
+          title={ villager.name }  >
+            <div class="card">
+                 <div class="card-content">
+                      <p> { villager.birthdayStr }</p>
+                      <p> { villager.personality }</p>
+                      <p> { villager.saying }</p>
 
-                <Link
-                  className="btn btn-block btn-squared btn-light text-dark"
-                  to={`/profiles/${profile._id}`}
-                >
-                  View their villagers and make comments.
-
-                  {VillagersToMoveOut}
-
-                </Link>
-              </div>
+                    
+                 </div> 
+               
             </div>
-          ))}
-      </div>
-    </div>
+          </Card> ))}
+
+        </div>
+
+    
   );
 };
 

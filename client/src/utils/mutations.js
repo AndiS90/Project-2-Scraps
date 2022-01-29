@@ -67,7 +67,7 @@ export const REMOVE_VILLAGER = gql`
 `;
 
 export const ADD_MOVINGVIL = gql`
-  mutation addMovingVil(movingVilInput: MovingVilInput!) {
+  mutation addMovingVil($movingVilInput: MovingVilInput!) {
     addMovingVil(movingVilInput: $movingVilInput) {
       _id
       villagerUser
@@ -79,7 +79,7 @@ export const ADD_MOVINGVIL = gql`
       image
       saying
       personality
-      comments: {
+      comments {
         _id
         commentText
         createdAt
@@ -101,7 +101,7 @@ export const REMOVE_MOVINGVIL = gql`
       image
       saying
       personality
-      comments: {
+      comments {
         _id
         commentText
         createdAt

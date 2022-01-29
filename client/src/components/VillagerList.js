@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { REMOVE_VILLAGER, ADD_MOVINGVIL } from '../utils/mutations';
-import { QUERY_ME } from '../utils/queries';
+import { QUERY_ME, QUERY_VILLAGER } from '../utils/queries';
 import { getVillagerbyId } from '../utils/API';
 import Auth from '../utils/auth'; 
 
@@ -15,7 +15,9 @@ import { removeVillagerId } from '../utils/localStorage';
 import CommentForm  from './CommentForm';
 import CommentList  from './CommentList';
 
-const VillagerList = () => {
+const VillagerList = ({ villagers }) => {
+
+
 
 // const [villager1, setVillager1State] = useState('');
 // const [villager2, setVillager2State] = useState('');
@@ -27,27 +29,33 @@ const VillagerList = () => {
 // const [villager8, setVillager8State] = useState('');
 // const [villager9, setVillager9State] = useState('');
 
-const [villagersToMoveOut, setVillagersToMoveOut] = useState('');
+// const [villagersToMoveOut, setVillagersToMoveOut] = useState('');
 
-const { loading, data } = useQuery(QUERY_ME);
+// const { loading, data } = useQuery(QUERY_ME);
 
 const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
 
     const [addMovingVil, { err }] = useMutation(ADD_MOVINGVIL);
 
-const  userData = data?.me || {};
+    const [vilId, setVilId] = useState('');
 
-if (!userData?.username) {
-  return (
-    <h4>
-      You need to be logged in to view a villager list Use the navigation links above to
-      sign up or log in!
-    </h4>
-  );
-}
+      const { loading, data } = useQuery(QUERY_VILLAGER, {
+        variables: {villagerId: vilId}
+      });
+
+// const  userData = data?.me || {};
+
+// if (!userData?.username) {
+//   return (
+//     <h4>
+//       You need to be logged in to view a villager list Use the navigation links above to
+//       sign up or log in!
+//     </h4>
+//   );
+// }
 
 
-  // create function that accepts the book's mongo _id value as param and deletes the book from the database
+  // create function that accepts the villagers's mongo _id value as param and deletes the villager from the database
   const handleDeleteVillager = async (villagerId) => {
 
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -57,7 +65,7 @@ if (!userData?.username) {
     }
 
     try {
-      const { data }= await removeVillager({
+      const  data2 = await removeVillager({
         variables: { villagerId }
       });
 
@@ -66,7 +74,7 @@ if (!userData?.username) {
       }
 
     // upon success, remove book's id from localStorage
-      removeVillagerId(villagerId);
+      // removeVillagerId(villagerId);
     } catch (err) {
       console.error(err);
     }
@@ -76,39 +84,47 @@ if (!userData?.username) {
 
     const handleMovingVillager = async (villagerId) => {
 
-   
+      try{
+
+        setVilId(villagerId);
+    
+
+      const movingVil = data?.villager || {};
       
-      try {
-        const vilObj = await getVillagerbyId(villagerId);
+      // try {
+      //   const vilObj = await getVillagerbyId(villagerId);
 
-        const villagerInput = {
-          name: vilObj.name['name-USen'],
-          apiId: vilObj.id,
-          birthdayStr: vilObj.birthdayStr,
-          species: vilObj.species,
-          icon: vilObj.icon,
-          image: vilObj.image,
-          saying: vilObj.saying,
-          personality: vilObj.personality
-        }
+      //   const villagerInput = {
+      //     name: vilObj.name['name-USen'],
+      //     apiId: vilObj.id,
+      //     birthdayStr: vilObj.birthdayStr,
+      //     species: vilObj.species,
+      //     icon: vilObj.icon,
+      //     image: vilObj.image,
+      //     saying: vilObj.saying,
+      //     personality: vilObj.personality
+      //   }
 
-        const data = await addMovingVil({
-           variables: { ...villagerInput },
+        const data1 = await addMovingVil({
+           variables: { ...movingVil },
         });
   
 
 
-      const movingVillagersArray = [];
+      // const movingVillagersArray = [];
 
-      const movingOutArrayofIds = movingVillagersArray.push( villagerId )
+      // const movingOutArrayofIds = movingVillagersArray.push( villagerId )
     
-      setVillagersToMoveOut(movingOutArrayofIds);
+      // setVillagersToMoveOut(movingOutArrayofIds);
     } catch (err) {
       console.error(err);
     }
   } 
 
-
+  if (!villagers.length) {
+    return <h3>No Villagers Yet</h3>;
+  }
+  
   return (
 
     <div>
@@ -119,8 +135,8 @@ if (!userData?.username) {
           <div className="flex-row justify-space-between my-4">
         
         
-        {userData.villagers &&
-          userData.villagers.map((villager) => (
+        {villagers &&
+          villagers.map((villager) => (
           <Card className='card-div'
           closeIcon={<Icon>close</Icon>}
           header={<CardTitle image={ villager.icon} reveal waves="light"/>}

@@ -6,32 +6,30 @@ import { getVillagerbyId } from '../utils/API';
 import { saveVillagerIds, getSavedVillagerIds } from '../utils/localStorage';
 
 import { ADD_VILLAGER } from '../utils/mutations';
+import { QUERY_VILLAGERS, QUERY_ME } from '../utils/queries';
 
 import Auth from '../utils/auth';
-
-import { useQuery } from '@apollo/client';
 import { getNamesPlusNullArray, searchAllVillagers } from '../utils/API';
 import { Autocomplete } from 'react-materialize';
 import 'materialize-css';
 
 
+const VillagerForm = () => {
 
-const VillagerForm = ({ profileId }) => {
-
-  const [namesAndIdsArr, setNamesAndIdsArr] = useState('');
+  const [namesAndApiIdsArr, setNamesAndApiIdsArr] = useState('');
 
   React.useEffect(() => {
 
-    const getNamesandIds = async() => {
-    const namesandIds = await searchAllVillagers();
+    const getNamesandApiIds = async() => {
+    const namesandApiIds = await searchAllVillagers();
 
-      setNamesAndIdsArr(namesandIds);
+      setNamesAndApiIdsArr(namesandApiIds);
     }
-    getNamesandIds();
+    getNamesandApiIds();
   })
 
 
-
+//optionsObj contains necessary formatting for autofill feature not currently working
   const [optionsObj, setOptionsObj] = useState('');
   
   React.useEffect(() => {
@@ -47,22 +45,45 @@ const VillagerForm = ({ profileId }) => {
   });
 
 
+  const [villagerNameInp, setVillagerNameInp] = useState('');
 
-console.log({ ...optionsObj } );
-
-
-  const [villager, setVillager] = useState('');
-
-  const [addVillager, { error }] = useMutation(ADD_VILLAGER);
+ 
 
   const [savedVillagerIds, setSavedVillagerIds] = useState(getSavedVillagerIds());
 
 
-    // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
+    // set up useEffect hook to save `savedVillagerIds` ( technically apiIds) list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveVillagerIds(savedVillagerIds);
   });
+
+ const [addVillager, { error }] = useMutation(ADD_VILLAGER, {
+  update(cache, { data: { addVillager } }) {
+    try {
+      const { villagers } = cache.readQuery({ query: QUERY_VILLAGERS });
+
+      cache.writeQuery({
+        query: QUERY_VILLAGERS,
+        data: { villagers: [addVillager, ...villagers] },
+      });
+    } catch (e) {
+      console.error(e);
+    }
+
+    // update me object's cache
+    const { me } = cache.readQuery({ query: QUERY_ME });
+    cache.writeQuery({
+      query: QUERY_ME,
+      data: { me: { ...me, villagers: [...me.villagers, addVillager] } },
+    });
+  },
+});
+
+
+
+
+
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -71,7 +92,7 @@ console.log({ ...optionsObj } );
 
     function getIdByName(value) {
 
-      const namesArr = namesAndIdsArr;
+      const namesArr = namesAndApiIdsArr;
   
       for (let j = 0; j < namesArr.length; j++) {
   
@@ -100,19 +121,27 @@ console.log({ ...optionsObj } );
         personality: vilObj.personality
       }
 
-      const data = await addVillager({
-         variables: { ...villagerInput },
+      const { data } = await addVillager({
+         variables: { ...villagerInput, villagerUser: Auth.getProfile().data.username,
+         },
       });
 
 
-      setSavedVillagerIds([...savedVillagerIds, vilObj.apiId]);
-      setVillager('');
+      setSavedVillagerIds([...savedVillagerIds, villagerInput.apiId]);
+      setVillagerNameInp('');
     } catch (err) {
       console.error(err);
     }
   };
 
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === 'villagerNameInp') {
+      setVillagerNameInp(value);
+    }
+  };
 
 
 
@@ -130,9 +159,9 @@ console.log({ ...optionsObj } );
           <div className="col-12 col-lg-9">
             <input
               placeholder="Search Villagers..."
-              value="Villager Name"
+              value={villagerNameInp}
               className="form-input w-100"
-              onChange={(event) => setVillager(event.target.value)} />
+              onChange={handleChange} />
 
               <Autocomplete
               id="Autocomplete-41"
@@ -144,15 +173,12 @@ console.log({ ...optionsObj } );
             />
 
            
-
-
-
            
           </div>
 
           <div className="col-12 col-lg-3">
             <button className="btn btn-info btn-block py-3" type="submit">
-              How they been to you?
+              Add Villager
             </button>
           </div>
           {error && (

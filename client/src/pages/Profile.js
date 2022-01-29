@@ -54,9 +54,9 @@ const Profile = () => {
         Your Current villagers
       </h2>
 
-      <div>{VillagerForm}</div>
+      <VillagerForm></VillagerForm>
 
-      <div>{VillagerList}</div> 
+      <VillagerList villagers = {profile.villagers}></VillagerList>
         
       </div>  
   );

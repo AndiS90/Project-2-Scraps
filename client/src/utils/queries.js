@@ -3,17 +3,17 @@ import { gql } from '@apollo/client';
 export const QUERY_MOVINGVILLAGERS = gql`
   query movingVils {
     movingVils {
-      _id: ID
-    villagerUser: String
-    name: String
-    apiId: Int!
-    birthdayStr: String
-    species: String!
-    icon: String
-    image: String
-    saying: String!
-    personality: String!
-    comments: {
+      _id
+    villagerUser
+    name
+    apiId
+    birthdayStr
+    species
+    icon
+    image
+    saying
+    personality
+    comments {
       _id
       commentText
       commentAuthor
@@ -21,7 +21,6 @@ export const QUERY_MOVINGVILLAGERS = gql`
     }
       }
     }
-  }
 `;
 
 export const QUERY_SINGLE_PROFILE = gql`
@@ -97,5 +96,27 @@ query villagers($profileId: ID!){
       }     
     }
 }
+`;
 
-`
+export const QUERY_VILLAGER = gql`
+query villager($villagerId: ID!){
+  villager(villagerId: $villagerId){
+      _id
+      villagerUser
+      name
+      apiId
+      birthdayStr
+      species
+      icon
+      image
+      saying
+      personality
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
+   }
+}
+`;

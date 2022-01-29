@@ -56,14 +56,17 @@ const typeDefs = gql`
   }
 
   input MovingVilInput {
+    _id: ID
+    villagerUser: String
     name: String
-    apiId: Int
+    apiId: Int!
     birthdayStr: String
     species: String!
     icon: String
     image: String
     saying: String!
     personality: String!
+   # comments: [Comment]
   }
 
   type Comment {
@@ -77,7 +80,7 @@ const typeDefs = gql`
    # profiles: [Profile]!
     profile(profileId: ID!): Profile
     villagers(profileId: ID!): [Villager]
-    villager(villagerID: ID!): Villager
+    villager(villagerId: ID!): Villager
     movingVils:[MovingVil]
     movingVil(villagerId: ID!): MovingVil
 
