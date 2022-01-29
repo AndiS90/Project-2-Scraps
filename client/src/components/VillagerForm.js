@@ -26,23 +26,23 @@ const VillagerForm = () => {
       setNamesAndApiIdsArr(namesandApiIds);
     }
     getNamesandApiIds();
-  })
+  });
 
 
 //optionsObj contains necessary formatting for autofill feature not currently working
-  const [optionsObj, setOptionsObj] = useState('');
+  // const [optionsObj, setOptionsObj] = useState('');
   
-  React.useEffect(() => {
+  // React.useEffect(() => {
 
-    const getObj = async () => {
-    const  response = await getNamesPlusNullArray();
+  //   const getObj = async () => {
+  //   const  response = await getNamesPlusNullArray();
     
-      setOptionsObj(response);
-    }
+  //     setOptionsObj(response);
+  //   }
 
-    getObj();
+  //   getObj();
 
-  });
+  // });
 
 
   const [villagerNameInp, setVillagerNameInp] = useState('');
