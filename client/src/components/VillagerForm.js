@@ -87,8 +87,9 @@ const VillagerForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const { value } = event.target;
+    // const { value } = event.target;
 
+    // console.log(value);
 
     function getIdByName(value) {
 
@@ -103,8 +104,9 @@ const VillagerForm = () => {
       }
   };
 
-  const apiId = getIdByName(value);
+  const apiId = getIdByName(villagerNameInp);
 
+  console.log(apiId);
 
 
     try { 
@@ -113,17 +115,20 @@ const VillagerForm = () => {
       const villagerInput = {
         name: vilObj.name['name-USen'],
         apiId: vilObj.id,
-        birthdayStr: vilObj.birthdayStr,
+        birthdayStr: vilObj['birthday-string'],
         species: vilObj.species,
-        icon: vilObj.icon,
-        image: vilObj.image,
+        icon: vilObj.icon_uri,
+        image: vilObj.image_uri,
         saying: vilObj.saying,
         personality: vilObj.personality
       }
 
+      console.log(villagerInput);
+
       const { data } = await addVillager({
-         variables: { ...villagerInput, villagerUser: Auth.getProfile().data.username,
-         },
+         variables: {villagerInput,
+                      // villagerUser: Auth.getProfile().data.username,
+        },
       });
 
 
@@ -159,6 +164,7 @@ const VillagerForm = () => {
           <div className="col-12 col-lg-9">
             <textarea
               placeholder="Search Villagers..."
+              name="villagerNameInp"
               value={villagerNameInp}
               className="form-input w-100"
               onChange={handleChange} ></textarea>

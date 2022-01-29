@@ -5,24 +5,24 @@ const dateFormat = require('../utils/dateFormat');
 const villagerSchema = new Schema({
     villagerUser: {
         type: String,
-        required: true,
+        // required: true,
         trim: true,
       },
     name: {
         type: String,
-        required: true,
+        // required: true,
       },
     apiId: {
         type: Number,
-        required: true,
+        // required: true,
     },
     birthdayStr: {
       type: String,
-      required: true,
+      // required: true,
     },
     species: {
       type: String,
-      required: true,
+      // required: true,
     },
     icon: {
       type: String,
@@ -32,23 +32,23 @@ const villagerSchema = new Schema({
     },
     saying: {
       type: String,
-      required: true,
+      // required: true,
     },
     personality: {
       type: String,
-      required: true,
+      // required: true,
     },
     comments: [
       {
         commentText: {
           type: String,
-          required: true,
+          // required: true,
           minlength: 1,
           maxlength: 280,
         },
         commentAuthor: {
           type: String,
-          required: true,
+          // required: true,
         },
         createdAt: {
           type: Date,

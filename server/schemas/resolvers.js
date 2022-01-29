@@ -74,15 +74,21 @@ const resolvers = {
     
     // Add a third argument to the resolver to access data in our `context`
     addVillager: async (parent, { villagerInput }, context) => {
+    
+      console.log(villagerInput);
+
       if (context.user) {
+
+        console.log(context.user);
+
         const villager = await Villager.create({
             villagerUser: context.user.username,
-            VillagerInput: villagerInput
+            villagerInput: { ...villagerInput  }
         });
-
+  console.log(villager);
         await Profile.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { villagers: villager._id } }
+          { $addToSet: { villagers: villager } }
         );
 
         return villager;
