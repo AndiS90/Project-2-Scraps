@@ -149,7 +149,7 @@ const VillagerForm = () => {
 
   return (
     <div>
-      <h4>Endorse some more skills below.</h4>
+     
 
       {Auth.loggedIn() ? (
         <form
@@ -157,22 +157,13 @@ const VillagerForm = () => {
           onSubmit={handleFormSubmit}
         >
           <div className="col-12 col-lg-9">
-            <input
+            <textarea
               placeholder="Search Villagers..."
               value={villagerNameInp}
               className="form-input w-100"
-              onChange={handleChange} />
+              onChange={handleChange} ></textarea>
 
-              <Autocomplete
-              id="Autocomplete-41"
-              options={{
-                data: {...optionsObj}
-              }}
-              placeholder="Insert here"
-              title="Input Label"
-            />
-
-           
+                    
            
           </div>
 

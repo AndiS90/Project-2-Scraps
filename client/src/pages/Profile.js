@@ -40,7 +40,7 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
-  if (!profile?.name) {
+  if (!profile?.username) {
     return (
       <h4>
         You've been logged out! Please log in to view your profile!

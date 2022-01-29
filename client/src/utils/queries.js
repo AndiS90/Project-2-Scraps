@@ -31,7 +31,7 @@ export const QUERY_SINGLE_PROFILE = gql`
       villagers{
         _id
         name
-        villagerId
+        apiId
         birthdayStr
         species
         icon
@@ -57,7 +57,7 @@ export const QUERY_ME = gql`
       username
       villagers{
         name
-        villagerId
+        apiId
         birthdayStr
         species
         icon
@@ -81,7 +81,7 @@ export const QUERY_VILLAGERS = gql`
 query villagers($profileId: ID!){
     villagers(profileId: $profileId){
       name
-      villagerId
+      apiId
       birthdayStr
       species
       icon
