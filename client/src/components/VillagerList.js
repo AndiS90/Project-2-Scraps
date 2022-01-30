@@ -8,7 +8,7 @@ import Auth from '../utils/auth';
 
 
 import 'materialize-css';
-import {  Button, Card, CardTitle, Icon, Select } from 'materialize-css';
+import {  Button, Card, CardTitle, Icon, Select, Col, Row } from 'react-materialize';
 
 import { removeVillagerId } from '../utils/localStorage';
 
@@ -17,7 +17,7 @@ import CommentList  from './CommentList';
 
 const VillagerList = ({ villagers }) => {
 
-
+console.log({ villagers });
 
 // const [villager1, setVillager1State] = useState('');
 // const [villager2, setVillager2State] = useState('');
@@ -109,6 +109,7 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
            variables: { ...movingVil },
         });
   
+        console.log(data1)
 
 
       // const movingVillagersArray = [];
@@ -134,22 +135,33 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
 
           <div className="flex-row justify-space-between my-4">
         
+     
         
         {villagers &&
           villagers.map((villager) => (
-          <Card className='card-div'
+          <Card 
           closeIcon={<Icon>close</Icon>}
-          header={<CardTitle image={ villager.icon} reveal waves="light"/>}
-          reveal={ <div> <CommentList> </CommentList> <CommentForm> </CommentForm> </div>}
+          header={<CardTitle image={ villager.image} reveal waves="light"/>}
+          reveal={ <div> <CommentList comments = {villager.comments}> </CommentList> <CommentForm villagerId = { villager._id }> </CommentForm> </div>}
           revealIcon={<Icon>more_vert</Icon>}
           title={ villager.name }  >
-            <div class="card">
+           
                  <div class="card-content">
                       <p> { villager.birthdayStr }</p>
                       <p> { villager.personality }</p>
                       <p> { villager.saying }</p>
-
-                      <Select
+     
+                  </div>
+                {/* <h3>Are they comfy where they are? </h3>
+                      <Row>
+                        <Input type="select" value={villager.apiI}>
+                          <option value={villager} key={}>  They sure are!</option>
+                          <option value={villager} key={} onClick={() => handleMovingVillager(villager.villagerId)}> They'd like to move out.</option>
+                          <option value={} key={} onClick={() => handleDeleteVillager(villager.villagerId)}>  Delete this Villager! </option>
+                        </Input>
+                      </Row> */}
+         <div>
+                       <Select
                           id="Select-33"
                           multiple={false}
                           onChange={function noRefCheck(){}}
@@ -188,10 +200,9 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
                             Delete this Villager!  
                           </option>
                         </Select>
-                    
-                 </div> 
-
-            </div>
+               
+                    </div>
+            
           </Card> ))}
 
         </div>

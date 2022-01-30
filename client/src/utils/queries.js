@@ -56,6 +56,7 @@ export const QUERY_ME = gql`
        _id
       username
       villagers{
+        _id
         name
         apiId
         birthdayStr

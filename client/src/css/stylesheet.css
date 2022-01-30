@@ -7,6 +7,8 @@
 
 body {
   background-image: url("../images/image-1.jpeg");
+  display: flex;
+  flex-direction: column;
 }
 
 /* CSS FOR HEADER (LOGGED IN)*/
@@ -40,6 +42,10 @@ h1 {
 
 h2 {
     font-family: FinkHeavy;
+}
+
+h3{
+  font-family: FinkHeavy;
 }
 
 h4 {
