@@ -9,7 +9,7 @@ import Auth from '../utils/auth';
 
 import 'materialize-css';
 import {  Button, Card, CardTitle, Icon, Select, Col, Row } from 'react-materialize';
-
+import '../css/stylesheet.css';
 import { removeVillagerId } from '../utils/localStorage';
 
 import CommentForm  from './CommentForm';
@@ -129,29 +129,28 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
   return (
 
     <div>
-         <div className="current-villagers">
-          {/* CARD TEMPLATE  */}
-
-
-          <div className="flex-row justify-space-between my-4">
-        
-     
-        
+         <div className="currentVillagers">
+         
         {villagers &&
           villagers.map((villager) => (
-          <Card 
-          closeIcon={<Icon>close</Icon>}
-          header={<CardTitle image={ villager.image} reveal waves="light"/>}
-          reveal={ <div> <CommentList comments = {villager.comments}> </CommentList> <CommentForm villagerId = { villager._id }> </CommentForm> </div>}
-          revealIcon={<Icon>more_vert</Icon>}
-          title={ villager.name }  >
+          // <Card 
+          // closeIcon={<Icon>close</Icon>}
+          // header={<CardTitle image={ villager.image} reveal waves="light"/>}
+          // reveal={ <div> <CommentList comments = {villager.comments}> </CommentList> <CommentForm villagerId = { villager._id }> </CommentForm> </div>}
+          // revealIcon={<Icon>more_vert</Icon>}
+          // title={ villager.name }  >
            
-                 <div class="card-content">
-                      <p> { villager.birthdayStr }</p>
-                      <p> { villager.personality }</p>
-                      <p> { villager.saying }</p>
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+                  <img class="activator" src={villager.image}/>
+          </div>
+
+            <div class="card-content">
+                <p>Birthday: { villager.birthdayStr }</p>
+                <p>Personality Type: { villager.personality }</p>
+                <p>Saying: { villager.saying }</p>
      
-                  </div>
+            </div>
                 {/* <h3>Are they comfy where they are? </h3>
                       <Row>
                         <Input type="select" value={villager.apiI}>
@@ -202,19 +201,25 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
                         </Select>
                
                     </div>
-            
-          </Card> ))}
-
-        </div>
-
+                    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">{villager.name}<i class="material-icons right">close</i></span>
+      <div>
+      <CommentList comments = {villager.comments}> </CommentList> 
+      <CommentForm villagerId = { villager._id }> </CommentForm> 
       </div>
 
+                    </div>
+           </div>   
+    
+          ))}
 
-    </div>
+          </div>
+          </div>
+
+         
+              )};
 
 
-    );
-  };
   
 
   

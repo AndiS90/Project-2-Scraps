@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { villagersToMoveOut } from '../VillagerList';
 
 import 'materialize-css';
-import {  Button, Card, CardTitle, Icon, Select } from 'materialize-css';
+import {  Button, Card, CardTitle, Icon, Select } from 'react-materialize';
 import CommentForm from '../CommentForm';
 import CommentList from '../CommentList';
 
