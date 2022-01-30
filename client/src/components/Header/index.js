@@ -47,6 +47,11 @@ const Header = () => {
                 </Link>           
          </li>
 
+         <li> <Link className="" to="/">
+            <h2 className='has-text-white'> Home </h2> 
+              </Link>
+          </li>
+
           {/* LINK TO DISPLAY DASHBOARD */}
           <li> <Link className="" to="/me">
             <h2 className='has-text-white'> Dashboard </h2> 

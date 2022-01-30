@@ -58,9 +58,7 @@ const Profile = () => {
 
   return (
     <div className='villager-container'>
-      <h2 className="card-header">
-        Your Current villagers
-      </h2>
+
 
       <VillagerForm></VillagerForm>
 

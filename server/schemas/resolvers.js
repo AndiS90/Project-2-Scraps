@@ -160,7 +160,7 @@ addMovingVil: async (parent, { movingVilInput }, context) => {
   if (context.user) {
     const movingVil = await MovingVil.create({
         villagerUser: context.user.username,
-        movingVilInput: movingVilInput
+        ...movingVilInput
     });
 
     // await Profile.findOneAndUpdate(

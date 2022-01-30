@@ -29,21 +29,6 @@ const VillagerForm = () => {
   }, []);
 
 
-//optionsObj contains necessary formatting for autofill feature not currently working
-  // const [optionsObj, setOptionsObj] = useState('');
-  
-  // React.useEffect(() => {
-
-  //   const getObj = async () => {
-  //   const  response = await getNamesPlusNullArray();
-    
-  //     setOptionsObj(response);
-  //   }
-
-  //   getObj();
-
-  // });
-
 
   const [villagerNameInp, setVillagerNameInp] = useState('');
 
@@ -141,6 +126,7 @@ const VillagerForm = () => {
 
 
   const handleChange = (event) => {
+
     const { name, value } = event.target;
 
     if (name === 'villagerNameInp') {

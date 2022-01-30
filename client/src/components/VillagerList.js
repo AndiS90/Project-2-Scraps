@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { REMOVE_VILLAGER, ADD_MOVINGVIL } from '../utils/mutations';
-import { QUERY_ME, QUERY_VILLAGER } from '../utils/queries';
+import { QUERY_ME, QUERY_MOVINGVILLAGERS, QUERY_VILLAGER } from '../utils/queries';
 import { getVillagerbyId } from '../utils/API';
 import Auth from '../utils/auth'; 
+import M from 'materialize-css';
+import ReactDOM from 'react-dom';
 
 
 import 'materialize-css';
@@ -16,43 +18,29 @@ import CommentForm  from './CommentForm';
 import CommentList  from './CommentList';
 
 const VillagerList = ({ villagers }) => {
-
+  
+  
 console.log({ villagers });
 
-// const [villager1, setVillager1State] = useState('');
-// const [villager2, setVillager2State] = useState('');
-// const [villager3, setVillager3State] = useState('');
-// const [villager4, setVillager4State] = useState('');
-// const [villager5, setVillager5State] = useState('');
-// const [villager6, setVillager6State] = useState('');
-// const [villager7, setVillager7State] = useState('');
-// const [villager8, setVillager8State] = useState('');
-// const [villager9, setVillager9State] = useState('');
-
-// const [villagersToMoveOut, setVillagersToMoveOut] = useState('');
-
-// const { loading, data } = useQuery(QUERY_ME);
 
 const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
 
-    const [addMovingVil, { err }] = useMutation(ADD_MOVINGVIL);
 
     const [vilId, setVilId] = useState('');
 
-      const { loading, data } = useQuery(QUERY_VILLAGER, {
-        variables: {villagerId: vilId}
-      });
 
-// const  userData = data?.me || {};
-
-// if (!userData?.username) {
-//   return (
-//     <h4>
-//       You need to be logged in to view a villager list Use the navigation links above to
-//       sign up or log in!
-//     </h4>
-//   );
-// }
+    const [addMovingVil, { err }] = useMutation(ADD_MOVINGVIL, {
+      update(cache, { data: { addMovingVil } }) {
+        try {
+          const { movingVils} = cache.readQuery({ query: QUERY_MOVINGVILLAGERS });
+    
+          cache.writeQuery({
+            query: QUERY_MOVINGVILLAGERS,
+          });
+        } catch (e) {
+          console.error(e);
+        }
+      }});
 
 
   // create function that accepts the villagers's mongo _id value as param and deletes the villager from the database
@@ -78,35 +66,54 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
  
 
     const handleMovingVillager = async (villagerId) => {
+     
 
-      try{
+      try{    
 
-        setVilId(villagerId);
+        console.log({ villagerId});
+
+       const  getVillagerFromId = (villagerId) => {
+
+        for (let i = 0; i < villagers.length; i++) {
+
+          if (villagers[i]._id === villagerId){
+
+            return villagers[i];
+          }
+
+        }
+     }
+
+        // setVilId(villagerId);
     
 
-      const movingVil = data?.villager || {};
+      // const movingVil = data?.villager || {};
       
       // try {
       //   const vilObj = await getVillagerbyId(villagerId);
 
-      //   const villagerInput = {
-      //     name: vilObj.name['name-USen'],
-      //     apiId: vilObj.id,
-      //     birthdayStr: vilObj.birthdayStr,
-      //     species: vilObj.species,
-      //     icon: vilObj.icon,
-      //     image: vilObj.image,
-      //     saying: vilObj.saying,
-      //     personality: vilObj.personality
-      //   }
+     const vilObj = getVillagerFromId(villagerId);
+
+     console.log({ vilObj });
+
+        const villagerInput = {
+          name: vilObj.name,
+          apiId: vilObj.apiId,
+          birthdayStr: vilObj.birthdayStr,
+          species: vilObj.species,
+          icon: vilObj.icon,
+          image: vilObj.image,
+          saying: vilObj.saying,
+          personality: vilObj.personality
+        }
 
         const data1 = await addMovingVil({
-           variables: { ...movingVil },
+           variables: {movingVilInput: { ...villagerInput}},
         });
   
         console.log(data1)
@@ -122,23 +129,44 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
     }
   } 
 
+
+
+const handleSelectChange = async ( event ) => {
+  event.preventDefault();
+  const { name, value } = event.target;
+
+  console.log({ name });
+
+
+  if (name && value==="2"){
+
+    await handleMovingVillager(name);
+
+  } if ( name && value==="3"){
+
+    await handleDeleteVillager(name);
+  }else
+
+  return;
+
+}
+
+
   if (!villagers.length) {
     return <h3>No Villagers Yet</h3>;
   }
 
+ 
+
+
   return (
 
     <div>
-         <div className="currentVillagers">
+         <div class= "row" className="currentVillagers">
          
         {villagers &&
           villagers.map((villager) => (
-          // <Card 
-          // closeIcon={<Icon>close</Icon>}
-          // header={<CardTitle image={ villager.image} reveal waves="light"/>}
-          // reveal={ <div> <CommentList comments = {villager.comments}> </CommentList> <CommentForm villagerId = { villager._id }> </CommentForm> </div>}
-          // revealIcon={<Icon>more_vert</Icon>}
-          // title={ villager.name }  >
+      
            
         <div class="card">
           <div class="card-image waves-effect waves-block waves-light">
@@ -160,10 +188,15 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
                         </Input>
                       </Row> */}
          <div>
+         <form
+          className="flex-row justify-center justify-space-between-md align-center"
+          onSubmit={handleSelectChange}
+        >
                        <Select
+                       
                           id="Select-33"
                           multiple={false}
-                          onChange={function noRefCheck(){}}
+                          onChange={handleSelectChange}
                           options={{
                             classes: '',
                             dropdownOptions: {
@@ -182,6 +215,7 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
                             }
                           }}
                           value=""
+                          name={villager._id}
                         >
                           <option
                             disabled
@@ -192,14 +226,14 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
                           <option value="1">
                             They sure are!
                           </option>
-                          <option value="2" onClick={() => handleMovingVillager(villager.villagerId)}>
+                          <option  value="2" >
                            They'd like to move out.
                           </option>
-                          <option value="3" onClick={() => handleDeleteVillager(villager.villagerId)}>
+                          <option value="3" >
                             Delete this Villager!  
                           </option>
                         </Select>
-               
+               </form>
                     </div>
                     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4">{villager.name}<i class="material-icons right">close</i></span>
