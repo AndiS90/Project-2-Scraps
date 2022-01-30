@@ -8,8 +8,8 @@ const resolvers = {
     //   return Profile.find();
     // },
 
-    profile: async (parent, { profileId }) => {
-      return Profile.findOne({ _id: profileId }).populate('villagers');
+    profile: async (parent, { username }) => {
+      return Profile.findOne({ username }).populate('villagers');
     },
 
     villagers: async (parent, { username }) => {

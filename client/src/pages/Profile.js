@@ -10,8 +10,6 @@ import 'materialize-css';
 
 
 
-// import SkillsList from '../components/SkillsList';
-// import SkillForm from '../components/SkillForm';
 
 import { QUERY_SINGLE_PROFILE, QUERY_ME } from '../utils/queries';
 
@@ -23,21 +21,23 @@ const Profile = () => {
 
   // If there is no `profileId` in the URL as a parameter, execute the `QUERY_ME` query instead for the logged in user's information
   const { loading, data } = useQuery(
-    profileId ? QUERY_SINGLE_PROFILE : QUERY_ME,
+    profileId? QUERY_SINGLE_PROFILE : QUERY_ME,
     {
-      variables: { profileId: profileId },
+      variables: { _id: profileId },
     }
   );
+
+
 
   // Check if data is returning from the `QUERY_ME` query, then the `QUERY_SINGLE_PROFILE` query
   const profile = data?.me || data?.profile || {};
 
- useEffect(() => {
+//  useEffect(() => {
+  console.log();
+//   console.log(profile);
 
-  console.log(profileId);
 
-
-  }, [profileId]);
+//   }, []);
 
   // Use React Router's `<Redirect />` component to redirect to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data._id === profileId) {
@@ -64,7 +64,7 @@ const Profile = () => {
 
       <VillagerForm></VillagerForm>
 
-      <VillagerList villagers = {profile.villagers}></VillagerList>
+      <VillagerList villagers = { profile.villagers }></VillagerList>
         
       </div>  
   );

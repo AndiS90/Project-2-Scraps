@@ -124,7 +124,7 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
   if (!villagers.length) {
     return <h3>No Villagers Yet</h3>;
   }
-  
+
   return (
 
     <div>
@@ -140,8 +140,7 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
           <Card className='card-div'
           closeIcon={<Icon>close</Icon>}
           header={<CardTitle image={ villager.icon} reveal waves="light"/>}
-          reveal={ <div> <CommentList> </CommentList>
-           <CommentForm> </CommentForm> </div>}
+          reveal={ <div> <CommentList> </CommentList> <CommentForm> </CommentForm> </div>}
           revealIcon={<Icon>more_vert</Icon>}
           title={ villager.name }  >
             <div class="card">
@@ -191,9 +190,7 @@ const [removeVillager, { error }] = useMutation(REMOVE_VILLAGER);
                         </Select>
                     
                  </div> 
-                  <Button className='btn-block btn-danger' onClick={() => handleDeleteVillager(villager.villagerId)}>
-                   
-                      </Button>
+
             </div>
           </Card> ))}
 
