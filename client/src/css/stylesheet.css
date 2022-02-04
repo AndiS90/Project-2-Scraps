@@ -1,3 +1,14 @@
+:root {
+  --primary: #a56a3eff;
+  --secondary: #189b75ff;
+  --tertiary: #f9d34bff;
+  --quatrinary: #7bc2d8ff;
+  --light: #f5f5e5ff;
+  --dark: #182c23;
+  --error: rgb(228, 46, 1);
+  --border-radius: 0.3rem;
+}
+
 /* CSS FOR HEADER */
 
 @font-face {
@@ -10,6 +21,7 @@ body {
     /* display: flex;
     flex-direction: column;
     justify-content: center; */
+    font-family: FinkHeavy;
 }
 
 /* CSS FOR HEADER (LOGGED IN)*/
@@ -53,20 +65,38 @@ h4 {
     font-family: FinkHeavy;
 }
 
+h5{
+  font-family: FinkHeavy;
+
+}
+
 p {
     font-family: FinkHeavy;
+    font-size: larger;
 }
 
 /* STYLING FOR NAVBAR - LOCATED IN HEADER */
 
-.loggedOutNav{
-
+nav.loggedOutNav.nav-wrapper{
   text-align: center;
+  width:100vw;
+}
+
+nav.loggedOutNav.btn {
+
 }
 
 nav{
+  background-color: #54ac8c;
 
   width:100vw;
+
+
+}
+
+.header{
+
+  width: 100vw;
 }
 
 nav ul {
@@ -83,10 +113,11 @@ nav ul {
     flex-flow: row wrap;
   }
   
-  nav li {
+  nav ul li {
     flex: .1 0 2em;
     /* float: left;  */
     text-align: center;
+    margin-top: 1em;
   }
   
   li a {
@@ -124,11 +155,6 @@ nav ul {
 
 }
 
-/* CARD CSS */
-.card-div {
-  float: left;
-}
-
 /* LOGO BEFORE LOGIN*/
 .logo-div-two {
   padding-top: 4rem;
@@ -142,12 +168,134 @@ nav ul {
 
 }
 
+.vContent{
+ background-image: url("../images/background-4.png");
+color: rgb(70, 40, 40);
+}
 
+.vContent p span{
+font-size: larger;
+
+}
 .currentVillagers{
-
   margin-top: 4rem;
-  background-image: url("../images/background-4.png");
+ }
+
+.buttonWrapper button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vForm {
+  background-color: var(--primary);
+  width: 100%;
+
+}
+
+.commentTitle{
+  text-align: center;
+  color: var(--light);
+}
+
+.commentCard{
+  display: flex-column;
+  color: var(--tertiary);
+  background-color: var(--primary);
+  -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0); 
+  box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+.commentCard h5{
+
+ margin-right: 2%;
+
+}
+
+.commentReveal{
+  background-color: var(--secondary);
+  padding-top: 1rem;
+}
+
+.vRevealName{
+
+  color: var(--primary);
+  font-size: 25%;
+}
+
+.commentForm{
+  display: flex-column;
+  color: white;
+  background-color: var(--quatrinary);
+  -webkit-box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 5px 5px 15px 25px rgba(115,70,11,0); 
+box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 5px 5px 15px 25px rgba(115,70,11,0);
+}
+
+.commentFormTitle{
+
+  padding-top: 3%;
+  padding-left: 3%;
+}
+
+.cCountDown{
+  padding-left: 3%;
+  padding-right: 6%;
+  padding-bottom: 2%;
+}
+
+.addCbtn{
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.button{
+
+  color: var(--tertiary);
+  background-color: var(--primary);
+  -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0); 
+  box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+
+}
+
+.card-image{
+ max-width: 275px;
+  height: auto;
+}
+
+.vSelect{
+  background-color: var(--tertiary);
+}
 
 
 
+.card-image{
+margin-top: 3%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.movingList{
+
+  margin-top: 2rem;
+
+}
+.movingOut{
+  margin-top: 5%;
+  -webkit-box-shadow: 5px 5px 15px 5px #FF8080, -9px 5px 15px 5px #FFE488, -7px -5px 15px 5px #8CFF85, 12px -5px 15px 5px #80C7FF, 12px 10px 15px 7px #E488FF, -10px 10px 15px 7px #FF616B, -10px -7px 27px 1px #8E5CFF, 5px 5px 15px 25px rgba(115,70,11,0); 
+box-shadow: 5px 5px 15px 5px #FF8080, -9px 5px 15px 5px #FFE488, -7px -5px 15px 5px #8CFF85, 12px -5px 15px 5px #80C7FF, 12px 10px 15px 7px #E488FF, -10px 10px 15px 7px #FF616B, -10px -7px 27px 1px #8E5CFF, 5px 5px 15px 25px rgba(115,70,11,0);
+}
+
+.profileCard{
+  margin-bottom: 3%;
+  border: 8px outset #11D3C9;
+  border-radius: 40px;
+  background-image:  url("../images/background-4.png") ;
+margin-right: ;
+}
+
+.villagerForm{
+
+  padding-top: 2%;
 }

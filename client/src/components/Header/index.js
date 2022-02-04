@@ -17,12 +17,12 @@ const Header = () => {
   };
   return (
 
-    <header className="header-div"> 
+    <header class="header" className="header-div"> 
     {/* <LoginTitle/> */}
          {/* <div className="container flex-column justify-space-between-lg text-center">
 
        */}
-        <div>
+       
           {Auth.loggedIn() ? (
             <>
 
@@ -76,17 +76,17 @@ const Header = () => {
              
 
           <div className='logo-div-two'>
-              <img src = {logo} alt = "" className = "icon-two"></img>
+              <img src = {logo} alt = "" class="icon-two"></img>
           </div>
             {/* <LoginBtn/> */}
        
-              <nav class = "loggedOutNav">
+              <nav class = "loggedOutNav nav-wrapper">
 
-              <Link className="btn btn-lg btn-primary m-2" to="/login">
+              <Link className="btn btn-large btn-primary m-2" to="/login">
                 <h2 className=' has-text-white'>  Login </h2>
               </Link>
 
-              <Link className="btn btn-lg btn-light m-2" to="/signup">
+              <Link className="btn btn-large btn-light m-2" to="/signup">
                <h2 className=''> Signup </h2> 
               </Link>
 
@@ -95,9 +95,7 @@ const Header = () => {
           )}
 
 
-        </div>
-    
-      {/* </div> */}
+       
     
     </header>
   );

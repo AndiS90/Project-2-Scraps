@@ -139,33 +139,31 @@ const VillagerForm = () => {
 
 
   return (
-    <div>
+    <div class="villagerForm">
      
 
       {Auth.loggedIn() ? (
         <form
-          className="flex-row justify-center justify-space-between-md align-center"
+          className=" villagerForm "
           onSubmit={handleFormSubmit}
         >
-          <div className="col-12 col-lg-9">
+          <div className="">
             <textarea
               placeholder="Search Villagers..."
               name="villagerNameInp"
               value={villagerNameInp}
               className="form-input w-100"
               onChange={handleChange} ></textarea>
-
-                    
-           
+          
           </div>
 
-          <div className="col-12 col-lg-3">
-            <button className="btn btn-info btn-block py-3" type="submit">
-              Add Villager
+          <div class = "buttonWrapper " className="">
+            <button class="valign-wrapper" className="btn btn-info btn-block " type="submit">
+             <h4> Add Villager</h4>
             </button>
           </div>
           {error && (
-            <div className="col-12 my-3 bg-danger text-white p-3">
+            <div className="  bg-danger text-white ">
               {error.message}
             </div>
           )}

@@ -42,11 +42,12 @@ const CommentForm = ({ villagerId }) => {
   };
 
   return (
-    <div>
+    <div class="commentForm">
+      <div class="commentFormTitle">
       <h4>Spill the tea. What they do?</h4>
-
+      </div>
       {Auth.loggedIn() ? (
-        <>
+        <div class="cCountDown ">
           <p
             className={`m-0 ${
               characterCount === 280 || error ? 'text-danger' : ''
@@ -55,11 +56,11 @@ const CommentForm = ({ villagerId }) => {
             Character Count: {characterCount}/280
             {error && <span className="ml-2">{error.message}</span>}
           </p>
-          <form
-            className="flex-row justify-center justify-space-between-md align-center"
+          <form 
+            className=""
             onSubmit={handleFormSubmit}
           >
-            <div className="col-12 col-lg-9">
+            <div class="col s9" className="">
               <textarea
                 name="commentText"
                 placeholder="Add your comment..."
@@ -70,13 +71,13 @@ const CommentForm = ({ villagerId }) => {
               ></textarea>
             </div>
 
-            <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
-                Add Comment
+            <div className="right-align">
+              <button className="  button " type="submit">
+                <div class= " addCbtn">Add Comment</div>
               </button>
             </div>
           </form>
-        </>
+        </div>
       ) : (
         <p>
           You need to be logged in to share your thoughts. Please{' '}

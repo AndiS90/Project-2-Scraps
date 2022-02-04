@@ -24,27 +24,32 @@ const MovingOutList = () => {
   }
 
   return (
-    <div>
+    <div class ="movingList">
      {movingVils &&
           movingVils.map((villager) => (
-          <Card className='card-div'
-          closeIcon={<Icon>close</Icon>}
-          header={<CardTitle image={ villager.icon} reveal waves="light"/>}
-          reveal={ <div> <CommentList> </CommentList>
-           <CommentForm> </CommentForm> </div>}
-          revealIcon={<Icon>more_vert</Icon>}
-          title={ villager.name }  >
-            <div class="card">
-                 <div class="card-content">
-                      <p> { villager.birthdayStr }</p>
-                      <p> { villager.personality }</p>
-                      <p> { villager.saying }</p>
+            <div class="card movingOut ">
+          <div class=" imageBox card-image waves-effect waves-block waves-light">
+                  <img class="activator " src={villager.image}/>
+          </div>
 
-                    
-                 </div> 
-               
+            <div class="vContent card-content">
+                <p><span>Birthday: </span>{ villager.birthdayStr }</p>
+                <p><span>Personality Type: </span>{ villager.personality }</p>
+                <p><span>Saying: </span> { villager.saying }</p>
+     
             </div>
-          </Card> ))}
+       
+                            
+    <div class=" card-reveal">
+     
+       <span class=" card-title vRevealName"><h2>{villager.name}</h2><i class="material-icons right">close</i></span>
+      <div class= "commentReveal"> 
+      <CommentList comments = {villager.comments}> </CommentList> 
+      <CommentForm villagerId = { villager._id }> </CommentForm> 
+      </div>
+    </div>
+           </div>   ))}
+           
 
         </div>
 

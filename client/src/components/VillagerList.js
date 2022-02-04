@@ -162,23 +162,23 @@ const handleSelectChange = async ( event ) => {
   return (
 
     <div>
-         <div class= "row" className="currentVillagers">
-         
+         <div class= "" className="currentVillagers">
+         <div class= "row">
         {villagers &&
-          villagers.map((villager) => (
-      
-           
-        <div class="card">
-          <div class="card-image waves-effect waves-block waves-light">
-                  <img class="activator" src={villager.image}/>
+          villagers.map((villager) => (            
+        
+          <div class= " profileCard col s12 m3 l4 ">
+        <div class="card vContent ">
+          <div class=" imageBox card-image waves-effect waves-block waves-light">
+                  <img class="activator " src={villager.image}/>
           </div>
 
-            <div class="card-content">
-                <p>Birthday: { villager.birthdayStr }</p>
-                <p>Personality Type: { villager.personality }</p>
-                <p>Saying: { villager.saying }</p>
+            <div class=" card-content">
+                <p><span>Birthday: </span>{ villager.birthdayStr }</p>
+                <p><span>Personality Type: </span>{ villager.personality }</p>
+                <p><span>Saying: </span> { villager.saying }</p>
      
-            </div>
+           
                 {/* <h3>Are they comfy where they are? </h3>
                       <Row>
                         <Input type="select" value={villager.apiI}>
@@ -187,13 +187,14 @@ const handleSelectChange = async ( event ) => {
                           <option value={} key={} onClick={() => handleDeleteVillager(villager.villagerId)}>  Delete this Villager! </option>
                         </Input>
                       </Row> */}
-         <div>
+         <div class="vForm">
          <form
-          className="flex-row justify-center justify-space-between-md align-center"
+         class=" "
+          className=""
           onSubmit={handleSelectChange}
         >
                        <Select
-                       
+                        class="select vSelect"
                           id="Select-33"
                           multiple={false}
                           onChange={handleSelectChange}
@@ -234,19 +235,20 @@ const handleSelectChange = async ( event ) => {
                           </option>
                         </Select>
                </form>
-                    </div>
-                    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">{villager.name}<i class="material-icons right">close</i></span>
-      <div>
+           </div> 
+       </div>
+    <div class=" card-reveal">     
+       <span class=" card-title vRevealName"><h2>{villager.name}</h2><i class="material-icons right">close</i></span>
+      <div class= "commentReveal"> 
       <CommentList comments = {villager.comments}> </CommentList> 
       <CommentForm villagerId = { villager._id }> </CommentForm> 
       </div>
-
-                    </div>
+    </div>
            </div>   
-    
+         </div>
+   
           ))}
-
+</div>
           </div>
           </div>
 
